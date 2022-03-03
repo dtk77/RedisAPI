@@ -21,7 +21,6 @@ public class RedisPlatformRepository : IPlatformRepository
 
         var db = _redis.GetDatabase();
         var serialPlat = JsonSerializer.Serialize(plat);
-        //db.StringSet(plat.Id, serialPlat);
 
         db.HashSet($"hashplatform", new HashEntry[]
             {new HashEntry(plat.Id, serialPlat)});
@@ -42,7 +41,6 @@ public class RedisPlatformRepository : IPlatformRepository
     public IEnumerable<Platform?>? GetPlatforms()
     {
         var db = _redis.GetDatabase();
-
         var completeSet = db.HashGetAll("hashplatform");
 
         if (completeSet.Length > 0)
